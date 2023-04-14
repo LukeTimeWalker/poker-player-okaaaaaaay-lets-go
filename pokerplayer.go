@@ -44,7 +44,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		if AnalyseFirstTwoCards(cards[0], cards[1]) {
 			return state.CurrentBuyIn
 		}
-		return 0
+		return ReturnDefaultBet()
 	}
 
 	j, err := json.Marshal(cards)
@@ -67,6 +67,9 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	}
 	switch rr.Rank {
 	case 0:
+		if len(cards) >= 6 {
+			return 0
+		}
 		return state.CurrentBuyIn
 	case 1:
 		return 1 / 5 * stack
