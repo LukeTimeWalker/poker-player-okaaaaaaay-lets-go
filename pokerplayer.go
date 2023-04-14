@@ -17,7 +17,21 @@ func NewPokerPlayer() *PokerPlayer {
 // call, raise or do an all-in; more information about this behaviour
 // can be found here: http://leanpoker.org/player-api
 func (p *PokerPlayer) BetRequest(state *Game) int {
-	return 10
+	// params := url.Values{}
+
+	// j, err := json.Marshal(state.CommunityCards)
+
+	// if err != nil {
+	// 	return 10
+	// }
+
+	// params.Add("cards", j)
+
+	// res, err := http.Get("http://rainman.leanpoker.org/rank", url.Values{"cards", {state.CommunityCards}})
+	// if err != nil {
+	// 	return 10
+	// }
+	return 15
 }
 
 // Showdown is called at the end of every round making it possible to
