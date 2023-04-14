@@ -33,15 +33,18 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	var cards []Card = state.CommunityCards
 	var stack int = 1000
 
-	if len(cards) == 0 {
-		return ReturnDefaultBet()
-	}
-
 	for _, player := range state.Players {
 		if player.ID == 2 {
 			stack = player.Stack
 			cards = append(cards, player.HoleCards...)
 		}
+	}
+
+	if len(cards) == 2 {
+		if AnalyseFirstTwoCards(cards[0], cards[1]) {
+			return state.CurrentBuyIn
+		}
+		return 0
 	}
 
 	j, err := json.Marshal(cards)
@@ -66,11 +69,11 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	case 0:
 		return state.CurrentBuyIn
 	case 1:
-		return stack
+		return 1 / 5 * stack
 	case 2:
-		return stack
+		return 1 / 4 * stack
 	case 3:
-		return stack
+		return 1 / 3 * stack
 	case 4:
 		return stack
 	case 5:
@@ -84,8 +87,28 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	default:
 		return ReturnDefaultBet()
 	}
+}
 
-	return ReturnDefaultBet()
+func AnalyseFirstTwoCards(card1 Card, card2 Card) bool {
+	if card1.Rank == card2.Rank {
+		return true
+	}
+
+	var highCards = []string{"J", "Q", "K", "A"}
+
+	if contains(card1.Rank, highCards) || contains(card2.Rank, highCards) {
+		return true
+	}
+	return false
+}
+
+func contains(s string, a []string) bool {
+	for _, i := range a {
+		if i == s {
+			return true
+		}
+	}
+	return false
 }
 
 func ReturnDefaultBet() int {
