@@ -68,6 +68,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	if err != nil {
 		return ReturnDefaultBet()
 	}
+	fmt.Println("Here")
 	fmt.Println(rr.Rank, cards)
 	switch rr.Rank {
 	case 0:
