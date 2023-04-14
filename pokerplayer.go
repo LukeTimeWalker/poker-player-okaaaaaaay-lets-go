@@ -1,5 +1,12 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/url"
+)
+
 // VERSION provides a short description of the player's current version
 // The string specified here will be shown for live.leanpoker.org games
 const VERSION = "Default Go folding player"
@@ -17,20 +24,29 @@ func NewPokerPlayer() *PokerPlayer {
 // call, raise or do an all-in; more information about this behaviour
 // can be found here: http://leanpoker.org/player-api
 func (p *PokerPlayer) BetRequest(state *Game) int {
-	// params := url.Values{}
 
-	// j, err := json.Marshal(state.CommunityCards)
+	u, _ := url.Parse("http://rainman.leanpoker.org/rank")
+	q := u.Query()
 
-	// if err != nil {
-	// 	return 10
-	// }
+	j, err := json.Marshal(state.CommunityCards)
 
-	// params.Add("cards", j)
+	if err != nil {
+		return 15
+	}
 
-	// res, err := http.Get("http://rainman.leanpoker.org/rank", url.Values{"cards", {state.CommunityCards}})
-	// if err != nil {
-	// 	return 10
-	// }
+	q.Set("cards", string(j))
+	u.RawQuery = q.Encode()
+
+	res, err := http.Get(u.String())
+
+	var rr = RainmanResponse{}
+	err = json.NewDecoder(res.Body).Decode(&rr)
+
+	fmt.Println(fmt.Sprintf("Rank: %d", rr.Rank))
+	if err != nil {
+		return 15
+	}
+
 	return 15
 }
 
