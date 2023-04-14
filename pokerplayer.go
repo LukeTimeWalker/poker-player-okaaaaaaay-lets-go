@@ -65,6 +65,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	if err != nil {
 		return ReturnDefaultBet()
 	}
+	fmt.Println(rr.Rank, len(cards))
 	switch rr.Rank {
 	case 0:
 		if len(cards) >= 6 {
