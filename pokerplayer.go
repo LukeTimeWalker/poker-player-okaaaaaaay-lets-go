@@ -77,11 +77,11 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		}
 		return state.CurrentBuyIn
 	case 1:
-		return 1 / 5 * stack
+		return int((1.0 / 5.0) * float32(stack))
 	case 2:
-		return 1 / 4 * stack
+		return int((2.0 / 5.0) * float32(stack))
 	case 3:
-		return 1 / 3 * stack
+		return int((3.0 / 5.0) * float32(stack))
 	case 4:
 		return stack
 	case 5:
@@ -102,7 +102,7 @@ func AnalyseFirstTwoCards(card1 Card, card2 Card) bool {
 		return true
 	}
 
-	var highCards = []string{"J", "Q", "K", "A"}
+	var highCards = []string{"J", "Q", "K", "A", "10"}
 
 	if contains(card1.Rank, highCards) || contains(card2.Rank, highCards) {
 		return true
