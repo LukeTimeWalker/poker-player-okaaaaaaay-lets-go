@@ -31,6 +31,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	q := u.Query()
 
 	var cards []Card = state.CommunityCards
+	var stack int = 1000
 
 	if len(cards) == 0 {
 		return ReturnDefaultBet()
@@ -38,6 +39,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 
 	for _, player := range state.Players {
 		if player.ID == 2 {
+			stack = player.Stack
 			cards = append(cards, player.HoleCards...)
 		}
 	}
@@ -57,10 +59,32 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	var rr = RainmanResponse{}
 	err = json.NewDecoder(res.Body).Decode(&rr)
 
-	fmt.Println(fmt.Sprintf("Rank: %d", rr.Rank))
 	if err != nil {
 		return ReturnDefaultBet()
 	}
+	switch rr.Rank {
+	case 0:
+		return ReturnDefaultBet()
+	case 1:
+		return ReturnDefaultBet()
+	case 2:
+		return 1 / 4 * stack
+	case 3:
+		return 1 / 3 * stack
+	case 4:
+		return 1 / 2 * stack
+	case 5:
+		return stack
+	case 6:
+		return stack
+	case 7:
+		return stack
+	case 8:
+		return stack
+	default:
+		return ReturnDefaultBet()
+	}
+	fmt.Println(fmt.Sprintf("Rank: %d", rr.Rank))
 
 	return ReturnDefaultBet()
 }
