@@ -77,11 +77,11 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		}
 		return state.CurrentBuyIn
 	case 1:
-		return int((1.0 / 6.0) * float32(stack))
+		return int((1.0 / 3.0) * float32(stack))
 	case 2:
-		return int((2.0 / 6.0) * float32(stack))
+		return int((2.0 / 3.0) * float32(stack))
 	case 3:
-		return int((3.0 / 6.0) * float32(stack))
+		return int((3.0 / 3.0) * float32(stack))
 	case 4:
 		return stack
 	case 5:
