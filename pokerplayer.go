@@ -11,6 +11,8 @@ import (
 // The string specified here will be shown for live.leanpoker.org games
 const VERSION = "Default Go folding player"
 
+const RAINMAN_URL = "http://rainman.leanpoker.org/rank"
+
 // PokerPlayer is a struct to organize player methods
 type PokerPlayer struct{}
 
@@ -25,13 +27,15 @@ func NewPokerPlayer() *PokerPlayer {
 // can be found here: http://leanpoker.org/player-api
 func (p *PokerPlayer) BetRequest(state *Game) int {
 
-	u, _ := url.Parse("http://rainman.leanpoker.org/rank")
+	u, _ := url.Parse(RAINMAN_URL)
 	q := u.Query()
 
-	j, err := json.Marshal(state.CommunityCards)
+	fmt.Println(state.Players)
+
+	j, err := json.Marshal(append(state.CommunityCards))
 
 	if err != nil {
-		return 15
+		return ReturnDefaultBet()
 	}
 
 	q.Set("cards", string(j))
@@ -45,9 +49,13 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 
 	fmt.Println(fmt.Sprintf("Rank: %d", rr.Rank))
 	if err != nil {
-		return 15
+		return ReturnDefaultBet()
 	}
 
+	return ReturnDefaultBet()
+}
+
+func ReturnDefaultBet() int {
 	return 15
 }
 
