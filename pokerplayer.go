@@ -64,7 +64,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	}
 	switch rr.Rank {
 	case 0:
-		return ReturnDefaultBet()
+		return state.CurrentBuyIn
 	case 1:
 		return stack
 	case 2:
@@ -84,7 +84,6 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	default:
 		return ReturnDefaultBet()
 	}
-	fmt.Println(fmt.Sprintf("Rank: %d", rr.Rank))
 
 	return ReturnDefaultBet()
 }
