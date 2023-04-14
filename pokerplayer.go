@@ -27,6 +27,7 @@ func NewPokerPlayer() *PokerPlayer {
 // can be found here: http://leanpoker.org/player-api
 func (p *PokerPlayer) BetRequest(state *Game) int {
 
+	fmt.Println(state)
 	u, _ := url.Parse(RAINMAN_URL)
 	q := u.Query()
 
