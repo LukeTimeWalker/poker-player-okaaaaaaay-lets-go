@@ -37,6 +37,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	q.Set("cards", string(j))
 	u.RawQuery = q.Encode()
 
+	fmt.Println(u.String())
 	res, err := http.Get(u.String())
 
 	var rr = RainmanResponse{}
