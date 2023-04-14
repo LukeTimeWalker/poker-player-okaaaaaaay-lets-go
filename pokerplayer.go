@@ -30,9 +30,19 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	u, _ := url.Parse(RAINMAN_URL)
 	q := u.Query()
 
-	fmt.Println(state.Players)
+	var cards []Card = state.CommunityCards
 
-	j, err := json.Marshal(append(state.CommunityCards))
+	if len(cards) == 0 {
+		return ReturnDefaultBet()
+	}
+
+	for _, player := range state.Players {
+		if player.ID == 2 {
+			cards = append(cards, player.HoleCards...)
+		}
+	}
+
+	j, err := json.Marshal(cards)
 
 	if err != nil {
 		return ReturnDefaultBet()
@@ -56,7 +66,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 }
 
 func ReturnDefaultBet() int {
-	return 15
+	return 101
 }
 
 // Showdown is called at the end of every round making it possible to
