@@ -77,13 +77,11 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		}
 		return state.CurrentBuyIn
 	case 1:
-		fmt.Println(fmt.Sprintf("Rechnung: %d", int((1.0/5.0)*float32(stack))))
-		return int((1.0 / 3.0) * float32(stack))
+		return int((1.0 / 6.0) * float32(stack))
 	case 2:
-		fmt.Println(fmt.Sprintf("Rechnung: %d", int((2.0/5.0)*float32(stack))))
-		return int((2.0 / 3.0) * float32(stack))
+		return int((2.0 / 6.0) * float32(stack))
 	case 3:
-		return stack
+		return int((3.0 / 6.0) * float32(stack))
 	case 4:
 		return stack
 	case 5:
