@@ -47,7 +47,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		if AnalyseFirstTwoCards(cards[0], cards[1]) {
 			return state.CurrentBuyIn
 		}
-		return ReturnDefaultBet()
+		return 0
 	}
 
 	j, err := json.Marshal(cards)
