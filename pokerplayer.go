@@ -41,6 +41,8 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 		}
 	}
 
+	fmt.Println(fmt.Sprintf("Number of Cards: %d", len(cards)))
+
 	if len(cards) == 2 {
 		if AnalyseFirstTwoCards(cards[0], cards[1]) {
 			return state.CurrentBuyIn
