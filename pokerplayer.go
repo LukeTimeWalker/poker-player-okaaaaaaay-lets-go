@@ -17,7 +17,7 @@ func NewPokerPlayer() *PokerPlayer {
 // call, raise or do an all-in; more information about this behaviour
 // can be found here: http://leanpoker.org/player-api
 func (p *PokerPlayer) BetRequest(state *Game) int {
-	return 0
+	return 1
 }
 
 // Showdown is called at the end of every round making it possible to
