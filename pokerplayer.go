@@ -66,7 +66,7 @@ func (p *PokerPlayer) BetRequest(state *Game) int {
 	case 0:
 		return ReturnDefaultBet()
 	case 1:
-		return ReturnDefaultBet()
+		return stack
 	case 2:
 		return stack
 	case 3:
